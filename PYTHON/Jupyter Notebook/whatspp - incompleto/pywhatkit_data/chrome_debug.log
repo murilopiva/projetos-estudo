@@ -1,0 +1,3 @@
+[8628:17340:0607/150304.735:ERROR:device_event_log_impl.cc(208)] [15:03:04.724] Bluetooth: bluetooth_adapter_winrt.cc:1191 Getting Radio failed. Chrome will be unable to change the power state by itself.
+[8628:17340:0607/150304.750:ERROR:device_event_log_impl.cc(208)] [15:03:04.747] Bluetooth: bluetooth_adapter_winrt.cc:1284 OnPoweredRadiosEnumerated(), Number of Powered Radios: 0
+[8628:17340:0607/150305.309:WARNING:pref_notifier_impl.cc(40)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
