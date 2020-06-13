@@ -1,0 +1,8 @@
+1 - Abra o atalho do jupyter notebook e clique com o botão direito:
+right click jupyter notebook's shortcut
+
+2 - Mude o conteúdo do parâmetro em Destino para o caminho desejado que o jupyter inicie: C:\Users\User\anaconda3\python.exe C:\Users\User\anaconda3\cwp.py C:\Users\User\anaconda3 C:\Users\User\anaconda3\python.exe C:\Users\User\anaconda3\Scripts\jupyter-notebook-script.py "C:\Users\User\Documents\GitHub\projetos-estudo\PYTHON\Jupyter Notebook"
+change targe param to the path you want jupyter to start
+
+3 - Aplicar e fechar
+Apply and close
