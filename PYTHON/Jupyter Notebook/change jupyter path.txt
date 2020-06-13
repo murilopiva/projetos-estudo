@@ -1,0 +1,23 @@
+Para abrir o jupyter notebook diretamente na pasta desejada:
+Changing jupyter working path and open it directly:
+
+1 - Abra o prompt de comando ou o Anaconda Promtp e digite o comando: jupyter notebook --generate-config
+Este comando irá gerar um arquivo no seguinte caminho com configurações do jupyter: C:\Users\username\.jupyter\jupyter_notebook_config.py
+Open cmd or anaconda prompt and run the following command:jupyter notebook --generate-config
+
+This will write the file C:\Users\username\.jupyter\jupyter_notebook_config.py
+
+2 - Entre no caminho informado no CMD;
+Browse the path given and edit file jupyter_notebook_config.py
+
+3 - Procure pelo seguinte conteudo: #c.NotebookApp.notebook_dir = ''
+CTRL + F for the following: #c.NotebookApp.notebook_dir = ''
+
+4 - Mude para c.NotebookApp.notebook_dir = '/the/path/to/home/folder/';
+Change that line to the path you want to open when jupyter starts
+
+5 - E retire o '#' para que o comando seja executado;
+Make sure to remove # so the command runs
+
+Ao abrir o Jupyter pelo menu iniciar ou pelo CMD, a pasta a ser aberta é o caminho informado!!
+When opening Jupyter by shortcut or CMD, it'l be oppend on the path you gave
