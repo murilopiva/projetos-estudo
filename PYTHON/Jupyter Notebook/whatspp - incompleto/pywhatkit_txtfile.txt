@@ -1,2 +1,17 @@
 selpath : chromedriver.exe
 --------------------
+Date: 22:6:2020
+Time: 21:36
+Phone number: +5519994133968
+Message: teste python
+--------------------
+Date: 22:6:2020
+Time: 21:39
+Phone number: +5519994133968
+Message: teste python
+--------------------
+Date: 22:6:2020
+Time: 21:41
+Phone number: +5519994133968
+Message: teste oi
+--------------------
