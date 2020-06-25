@@ -1,27 +1,50 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from models import Pessoas, Atividades
+from models import Pessoas, Atividades, Usuarios
+from flask_httpauth import HTTPBasicAuth
 
+# apenas para demonstrar, vamos criar uma tabela de usuario
+# USUARIOS = {
+#     'murilo': '111',
+#     'piva': '456'
+# }
+
+auth = HTTPBasicAuth()
 app = Flask(__name__)
 api = Api(app)
 
-#api rest de pessoas
+@auth.verify_password # verify password diz que a função abaixo é a que verifica senha
+def verificacao(login, senha): # precisa explicitar quais metodos vao passar por verificação de senha, ver classe Pessoa
+    # verifica se o login e senha foram mencionados
+    # print('validando usuario')
+    # print(USUARIOS.get(login)==senha)
+
+    if not (login, senha):
+        return False  # autenticação não foi feita com sucesso
+
+    # else USUARIOS.get(login) == senha
+    # posso deixar o else comentado acima porém posso já passar direto no return pq já vai retornar true ou false
+    #return USUARIOS.get(login) == senha # se eu estivesse usando o dic de hardcode
+    return Usuarios.query.filter_by(login=login,senha=senha).first() # usa o first pra retornar o obj. se não usar first, sempre retorna tru
+
+# api rest de pessoas
 class Pessoa(Resource):
+    @auth.login_required # esse comando diz que precisa estar logado para acessar o metodo
     def get(self, nome):
         pessoa = Pessoas.query.filter_by(nome=nome).first()
         try:
             response = {
-                'nome':pessoa.nome,
-                'idade':pessoa.idade,
-                'id':pessoa.id
+                'nome': pessoa.nome,
+                'idade': pessoa.idade,
+                'id': pessoa.id
             }
         except AttributeError:
-            response = {'status':'erro','Mensagem':'Pessoa não encontrada'}
+            response = {'status': 'erro', 'Mensagem': 'Pessoa não encontrada'}
 
         return response
 
     def put(self, nome):
-        pessoa = Pessoas.query.filter_by(nome = nome).first()
+        pessoa = Pessoas.query.filter_by(nome=nome).first()
         dados = request.json
 
         if 'nome' in dados:
@@ -35,9 +58,9 @@ class Pessoa(Resource):
 
         pessoa.save()
         response = {
-            'id':pessoa.id,
-            'nome':pessoa.nome ,
-            'idade':pessoa.idade
+            'id': pessoa.id,
+            'nome': pessoa.nome,
+            'idade': pessoa.idade
         }
         return response
 
@@ -45,24 +68,25 @@ class Pessoa(Resource):
         pessoa = Pessoas.query.filter_by(nome=nome).first()
         mensagem = 'Pessoa {} excluída com sucesso'.format((pessoa.nome))
         pessoa.delete()
-        return {'status':'sucesso','mensagem':mensagem}
+        return {'status': 'sucesso', 'mensagem': mensagem}
 
 
 class Listapessoas(Resource):
+    @auth.login_required  # esse comando diz que precisa estar logado para acessar o metodo
     def get(self):
         pessoas = Pessoas.query.all()
-        response = [{'id': i.id, 'nome': i .nome, 'idade': i.idade} for i in pessoas]
-        #print(response)
+        response = [{'id': i.id, 'nome': i.nome, 'idade': i.idade} for i in pessoas]
+        # print(response)
         return response
 
     def post(self):
         dados = request.json
-        pessoa = Pessoas(nome=dados['nome'], idade=dados['idade']) # id é gerado automaticamente
+        pessoa = Pessoas(nome=dados['nome'], idade=dados['idade'])  # id é gerado automaticamente
         pessoa.save()
         response = {
-            'id':pessoa.id,
-            'nome':pessoa.nome ,
-            'idade':pessoa.idade
+            'id': pessoa.id,
+            'nome': pessoa.nome,
+            'idade': pessoa.idade
         }
         return response
 
@@ -71,7 +95,7 @@ class Listaatividades(Resource):
     def get(self):
         atividades = Atividades.query.all()
         response = [{'id': i.id, 'nome': i.nome, 'Pessoa': i.pessoa.nome} for i in atividades]
-        #print(response)
+        # print(response)
         return response
 
     def post(self):
@@ -86,7 +110,7 @@ class Listaatividades(Resource):
                 'id': atividade.id
             }
         except AttributeError:
-            response = {'status':'erro','Mensagem':'Pessoa não encontrada'}
+            response = {'status': 'erro', 'Mensagem': 'Pessoa não encontrada'}
 
     def delete(self, id):
         atv = Atividades.query.filter_by(id=id).first()
@@ -96,10 +120,10 @@ class Listaatividades(Resource):
 
         return response
 
+
 api.add_resource(Pessoa, '/pessoa/<string:nome>/')
 api.add_resource(Listapessoas, '/pessoa/')
 api.add_resource(Listaatividades, '/atividades/')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
