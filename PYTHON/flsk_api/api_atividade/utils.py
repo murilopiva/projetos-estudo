@@ -1,8 +1,10 @@
+#UTILS É APENAS PARA ANTES DE FAZER O RESTful COM O APP.PY
+
 from models import Pessoas
 
 #insere
 def insere_pessoas():
-    pessoa = Pessoas(nome='Piva', idade=25)
+    pessoa = Pessoas(nome='Murilo', idade=24)
     print(pessoa)# vai printar murilo pq defini o metodo __repr__ da classe Pessoas, em models, para retornar o nome do obj
     #db_session.add(pessoa)
     #db_session.commit()
@@ -37,7 +39,7 @@ def exclui_pessoa():
 if __name__ == '__main__':
     #insere_pessoas()
     #altera_pessoa()
-    exclui_pessoa()
+    #exclui_pessoa()
     consulta_pessoas()
 
 
